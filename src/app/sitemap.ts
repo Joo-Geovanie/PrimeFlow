@@ -1,10 +1,17 @@
 import type { MetadataRoute } from "next";
 import { getPublishedArticles, getPublishedProducts } from "@/lib/data-store";
 
+function resolveBaseUrl(): string {
+  const raw = (
+    process.env.NEXT_PUBLIC_SITE_URL || "https://primeflow-production.up.railway.app"
+  ).trim();
+  const withProto =
+    raw.startsWith("http://") || raw.startsWith("https://") ? raw : `https://${raw}`;
+  return withProto.replace(/\/+$/, "");
+}
+
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    "https://primeflow-materials.up.railway.app";
+  const baseUrl = resolveBaseUrl();
 
   const [products, articles] = await Promise.all([
     getPublishedProducts(),

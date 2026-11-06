@@ -22,10 +22,16 @@ const ibmPlexMono = IBM_Plex_Mono({
   weight: ["400", "500", "600"],
 });
 
+function resolveSiteUrl(): string {
+  const raw = (
+    process.env.NEXT_PUBLIC_SITE_URL || "https://primeflow-production.up.railway.app"
+  ).trim();
+  if (raw.startsWith("http://") || raw.startsWith("https://")) return raw;
+  return `https://${raw}`;
+}
+
 export const metadata: Metadata = {
-  metadataBase: new URL(
-    process.env.NEXT_PUBLIC_SITE_URL || "https://primeflow-materials.up.railway.app"
-  ),
+  metadataBase: new URL(resolveSiteUrl()),
   title: {
     default: "PrimeFlow | Prime Quality, Consistent Flow. Recycled PP & PE Resin",
     template: "%s | PrimeFlow Industrial Materials",
