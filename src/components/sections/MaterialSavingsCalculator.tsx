@@ -508,7 +508,7 @@ export function MaterialSavingsCalculator() {
                 >
                   {submitting
                     ? isId
-                      ? "Mengirim Kalkulasi ke Meja Sales..."
+                      ? "Mengirim Kalkulasi ke Tim Sales..."
                       : "Transmitting Calculation to Sales Desk..."
                     : isId
                     ? "Kirim Kalkulasi & Minta Penawaran Khusus"

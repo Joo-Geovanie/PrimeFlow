@@ -484,7 +484,7 @@ export default async function ProductDetailPage({
             ) : (
               <p className="text-sm text-[#4B5B6E]">
                 {isId
-                  ? "Belum ada dokumen publik terlampir. Minta COA batch melalui meja komersial kami."
+                  ? "Belum ada dokumen publik terlampir. Silakan minta COA batch melalui tim komersial kami."
                   : "No public documents attached yet. Request a batch COA via our commercial desk."}
               </p>
             )}

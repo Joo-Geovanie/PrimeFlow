@@ -76,65 +76,65 @@ const PROCESSING_STAGES_ID = [
   {
     step: "01",
     name: "Seleksi Bahan Baku",
-    spec: "Aliran Pasca-Industri Satu Siklus Panas",
+    spec: "Sisa Produksi Pabrik Satu Siklus Panas",
     summary:
-      "Sisa potongan produksi, sprue, runner, dan trim film bersih yang diserap langsung dari pabrik konversi industri, bebas kontaminasi sampah organik kota.",
+      "Sisa potongan produksi, sprue, runner, dan trim plastik film bersih yang diserap langsung dari pabrik manufaktur mitra, bebas dari cemaran sampah rumah tangga.",
   },
   {
     step: "02",
     name: "Sortir Spektroskopi NIR",
-    spec: "Ambang Penolakan PVC < 0.1%",
+    spec: "Bebas Cemaran PVC (< 0.1%)",
     summary:
-      "Verifikasi Near-Infrared (NIR) genggam memisahkan aliran PP, HDPE, dan LDPE secara presisi serta menolak kontaminan silang PVC, PET, logam, dan elastomer.",
+      "Pemindaian Near-Infrared (NIR) memisahkan jenis polimer PP, HDPE, dan LDPE secara akurat serta menolak cemaran silang PVC, PET, logam, maupun karet.",
   },
   {
     step: "03",
-    name: "Pencucian Alkali Panas Presisi",
+    name: "Pencucian Alkali Panas",
     spec: "Cuci Panas Bertingkat 70 - 80 C",
     summary:
-      "Pencucian alkali panas dan surfaktan mengangkat sisa oli permukaan, mold release agent, serta perekat label tanpa memutus rantai polimer.",
+      "Pencucian air panas beralkali dan surfaktan khusus meluruhkan sisa oli mesin, pelumas cetakan, serta lem label tanpa merusak ikatan polimer.",
   },
   {
     step: "04",
     name: "Formulasi Aditif",
     spec: "0.1 - 0.3% Antioksidan + Kalibrasi MFI",
     summary:
-      "Pendosisan loss-in-weight untuk antioksidan primer dan sekunder, pengatur reologi peroksida organik untuk PP, pencerah optik, dan penetral bau.",
+      "Penambahan antioksidan primer dan sekunder, peroksida organik pengatur alir untuk PP, pencerah warna, serta penetral bau secara terukur.",
   },
   {
     step: "05",
     name: "Ekstrusi & Mikro-Filtrasi",
     spec: "100 - 120 Mesh (< 100 Mikron)",
     summary:
-      "Kompon sekrup tunggal berdaya tahan tinggi yang dipadukan dengan automatic screen changer untuk menahan bintik karbon dan melindungi nozzle mesin klien.",
+      "Ekstrusi bertekanan stabil dengan automatic screen changer rapat untuk menahan bintik karbon dan menjaga nozzle mesin cetak Anda tetap aman.",
   },
   {
     step: "06",
-    name: "Degassing Vakum Tiga Tahap",
-    spec: "Ekstraksi Volatil & Uap Air",
+    name: "Ekstraksi Vakum Tiga Tahap",
+    spec: "Penyedotan Gas & Uap Air",
     summary:
-      "Tiga zona ekstraksi vakum menarik keluar senyawa organik volatil (VOC) dan uap air sebelum keluar dari die-head, mencegah rongga dan gelembung.",
+      "Tiga titik penghisapan vakum menyedot keluar sisa uap air dan gas senyawa volatil sebelum keluar dari cetakan die-head, mencegah biji plastik keropos.",
   },
   {
     step: "07",
-    name: "Peletisasi & Ayakan Getar",
-    spec: "Geometri Silindris Seragam",
+    name: "Granulasi Biji Plastik & Ayakan Getar",
+    spec: "Ukuran Biji Plastik Seragam",
     summary:
-      "Pemotongan strand atau die-face presisi yang diikuti pengeringan sentrifugal dan klasifikasi ayakan getar untuk mengeliminasi serbuk halus.",
+      "Pemotongan biji plastik secara presisi diikuti pengeringan sentrifugal dan ayakan getar untuk memisahkan debu plastik maupun butiran yang menggumpal.",
   },
   {
     step: "08",
-    name: "Pengemasan Inner-Liner Kedap",
+    name: "Pengemasan Kedap Udara",
     spec: "Target Kadar Air < 0.05%",
     summary:
-      "Dikemas dalam karung woven PP 25 kg berlapis inner liner PE rapat (atau jumbo bag 500 hingga 1.000 kg) guna menahan kelembapan udara gudang.",
+      "Dikemas dalam karung woven PP 25 kg berlapis inner liner PE rapat (atau jumbo bag 500 hingga 1.000 kg) agar tetap kering selama disimpan di gudang.",
   },
   {
     step: "09",
-    name: "QC Laboratorium Batch & QR COA",
+    name: "Uji Lab per Batch & QR COA",
     spec: "ASTM D1238 / D5630 / ISO 527",
     summary:
-      "Verifikasi lab internal untuk Melt Flow Index, kadar air (<0.05%), kadar abu (<0.15%), kekuatan tarik/impak, dan penyusutan cetakan sebelum rilis QR COA.",
+      "Pengujian laboratorium internal untuk Melt Flow Index, kadar air (<0.05%), kadar abu (<0.15%), kekuatan tarik/bentur, dan susut cetak sebelum terbit QR COA.",
   },
 ];
 
@@ -545,18 +545,18 @@ export default async function HomePage() {
             <div className="lg:col-span-4 space-y-4">
               <span className="font-mono-tech text-xs uppercase tracking-[0.2em] text-[#123A68] block">
                 {isId
-                  ? "01 | POSISI STRATEGIS INDUSTRI"
+                  ? "01 | FOKUS INDUSTRI KAMI"
                   : "01 | INDUSTRIAL POSITIONING"}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#101C2B] leading-tight">
                 {isId
-                  ? "Mitra Polimer Strategis bagi Pabrik Manufaktur Skala Menengah."
+                  ? "Mitra Pasokan Biji Plastik Terpercaya untuk Pabrik Skala Menengah."
                   : "A Strategic Polymer Partner for Medium-Scale Manufacturing."}
               </h2>
               <div className="h-1 w-16 bg-[#101C2B]" />
               <p className="font-mono-tech text-xs text-[#4B5B6E] leading-relaxed pt-2">
                 {isId
-                  ? "Industri plastik Indonesia mengimpor 50% hingga 60% kebutuhan resin murni (INAPLAS, 2023), sementara bahan baku resin mencakup 60% hingga 70% dari total biaya produksi (PlasticsEurope, 2023)."
+                  ? "Industri plastik nasional masih mengimpor 50% hingga 60% kebutuhan biji plastik murni (INAPLAS, 2023), padahal biaya bahan baku mencapai 60% hingga 70% dari total Harga Pokok Produksi (PlasticsEurope, 2023)."
                   : "Indonesia's plastics industry imports 50% to 60% of its virgin resin demand (INAPLAS, 2023), while raw resin represents 60% to 70% of total conversion cost (PlasticsEurope, 2023)."}
               </p>
             </div>
@@ -564,7 +564,7 @@ export default async function HomePage() {
             <div className="lg:col-span-8 space-y-8">
               <p className="font-display text-xl sm:text-2xl text-[#101C2B] leading-relaxed font-medium">
                 {isId
-                  ? "Produsen kemasan dan peralatan rumah tangga skala menengah terjebak di antara dua kompromi mahal: menyerap fluktuasi harga resin murni impor yang tinggi, atau menggunakan skrap daur ulang tanpa verifikasi yang memicu lonjakan tekanan ekstruder, penyumbatan die-head, dan produk getas."
+                  ? "Pabrik kemasan dan peralatan rumah tangga skala menengah sering kali dihadapkan pada dua pilihan sulit: membeli biji plastik murni impor yang mahal dan fluktuatif, atau memakai bahan daur ulang biasa yang berisiko menyumbat saringan mesin, memicu bintik hitam, dan menghasilkan cetakan yang getas."
                   : "Medium-sized packaging and household manufacturers are caught between two costly compromises: absorbing volatile imported virgin resin prices, or running unverified recycled scrap that triggers melt-pressure spikes, die-head clogging, and brittle parts."}
               </p>
 
@@ -572,12 +572,12 @@ export default async function HomePage() {
                 <div className="space-y-3">
                   <div className="font-mono-tech text-xs uppercase tracking-wider text-[#123A68] font-semibold">
                     {isId
-                      ? "Mengapa Bahan Baku Pasca-Industri Penting"
+                      ? "Keunggulan Bahan Baku Sisa Produksi Pabrik"
                       : "Why Post-Industrial Feedstock Matters"}
                   </div>
                   <p className="text-sm text-[#4B5B6E] leading-relaxed">
                     {isId
-                      ? "Konversi plastik domestik menghasilkan sekitar 300.000 hingga 600.000 ton sisa potongan produksi internal per tahun (tingkat skrap proses 5% hingga 12%). Karena aliran pasca-industri ini tidak pernah bersentuhan dengan sampah organik kota atau bahan kimia rumah tangga, rantai polimernya tetap bersih dan stabil secara termal."
+                      ? "Pabrik pencetakan plastik di Indonesia menghasilkan sekitar 300.000 hingga 600.000 ton sisa potongan produksi bersih per tahun (sekitar 5% hingga 12% dari kapasitas produksi). Karena bahan pasca-industri ini tidak pernah tercampur sampah rumah tangga, struktur molekul polimernya masih sangat utuh dan stabil saat dilelehkan kembali."
                       : "Domestic plastic conversion generates an estimated 300,000 to 600,000 tons of internal production offcuts per year (5% to 12% process scrap rate). Because this post-industrial stream has never contacted municipal organic waste or household chemicals, its polymer backbone remains clean and thermally stable."}
                   </p>
                 </div>
@@ -585,12 +585,12 @@ export default async function HomePage() {
                 <div className="space-y-3">
                   <div className="font-mono-tech text-xs uppercase tracking-wider text-[#123A68] font-semibold">
                     {isId
-                      ? "Disiplin Rekayasa di Atas Skrap Komoditas"
+                      ? "Standar Laboratorium, Bukan Sekadar Jual Beli Rongsok"
                       : "Engineering Discipline Over Commodity Scrap"}
                   </div>
                   <p className="text-sm text-[#4B5B6E] leading-relaxed">
                     {isId
-                      ? "PrimeFlow dibangun sebagai mitra teknologi material industri, bukan sekadar pedagang skrap plastik. Kami memadukan sortir polimer NIR, pencucian alkali panas, degassing vakum tiga tahap, dan validasi Certificate of Analysis (COA) per batch dengan penjadwalan Adaptive Locked-Supply."
+                      ? "PrimeFlow hadir sebagai mitra teknologi bahan baku industri, bukan pengepul plastik konvensional. Setiap lot biji plastik kami melewati seleksi spektroskopi NIR, pencucian alkali panas, ekstraksi vakum tiga tahap, serta pengujian Certificate of Analysis (COA) dengan jadwal pengiriman bertahap (Adaptive Locked-Supply)."
                       : "PrimeFlow is structured as an industrial materials technology partner rather than a scrap trader. We combine NIR polymer sorting, hot alkaline washing, triple-stage vacuum degassing, and batch Certificate of Analysis (COA) validation with Adaptive Locked-Supply scheduling."}
                   </p>
                 </div>
@@ -609,18 +609,18 @@ export default async function HomePage() {
             <div className="space-y-3 max-w-2xl">
               <span className="font-mono-tech text-xs uppercase tracking-[0.2em] text-[#123A68]">
                 {isId
-                  ? "02 | MATRIKS KOMPARASI MATERIAL"
+                  ? "02 | PERBANDINGAN MUTU BAHAN BAKU"
                   : "02 | COMPARATIVE MATERIAL BENCHMARK"}
               </span>
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#101C2B]">
                 {isId
-                  ? "Menjembatani Kesenjangan Antara Resin Murni Impor dan Skrap Konvensional."
+                  ? "Solusi Tepat di Antara Bijih Plastik Murni Impor dan Daur Ulang Biasa."
                   : "Bridging the Gap Between Imported Virgin Resin and Conventional Scrap."}
               </h2>
             </div>
             <p className="text-xs font-mono-tech text-[#4B5B6E] max-w-md">
               {isId
-                ? "Berdasarkan analisis rekayasa komparatif Proposal Bisnis PrimeFlow Bagian 2.1 & Bagian 2.4."
+                ? "Merujuk pada kajian teknis Proposal Bisnis PrimeFlow Bagian 2.1 & Bagian 2.4."
                 : "Grounded in PrimeFlow Business Proposal Section 2.1 & Section 2.4 comparative engineering analysis."}
             </p>
           </div>
@@ -634,13 +634,13 @@ export default async function HomePage() {
                     {isId ? "Parameter Evaluasi" : "Evaluation Parameter"}
                   </th>
                   <th className="p-4 sm:p-5 border-r border-[#1E324A] w-[24%] text-[#F3F5F6]/75">
-                    {isId ? "Resin Murni (Virgin) Impor" : "Imported Virgin Resin"}
+                    {isId ? "Biji Plastik Murni (Virgin) Impor" : "Imported Virgin Resin"}
                   </th>
                   <th className="p-4 sm:p-5 border-r border-[#1E324A] w-[26%] bg-[#123A68] text-[#FFD71C]">
                     PrimeFlow Near-Virgin PP / PE
                   </th>
                   <th className="p-4 sm:p-5 w-[22%] text-[#F3F5F6]/75">
-                    {isId ? "Skrap Daur Ulang Konvensional" : "Conventional Recycled Scrap"}
+                    {isId ? "Biji Daur Ulang Konvensional" : "Conventional Recycled Scrap"}
                   </th>
                 </tr>
               </thead>
@@ -680,26 +680,26 @@ export default async function HomePage() {
             <div className="space-y-3">
               <span className="font-mono-tech text-xs uppercase tracking-[0.2em] text-[#02BDEA]">
                 {isId
-                  ? "03 | KOLEKSI GRADE POLIMER"
+                  ? "03 | KATALOG BIJI PLASTIK"
                   : "03 | POLYMER GRADE COLLECTION"}
               </span>
               <h2 className="font-display text-3xl sm:text-5xl font-bold text-white">
                 {isId
-                  ? "Keluarga Material PP & PE Terformulasi."
+                  ? "Varian Biji Plastik PP & PE Berstandar Industri."
                   : "Engineered PP & PE Material Families."}
               </h2>
             </div>
             <div className="flex flex-wrap items-center gap-4">
               <span className="font-mono-tech text-xs text-[#F3F5F6]/70">
                 {isId
-                  ? "4 GRADE PROTOTIPE AKTIF DI CMS"
+                  ? "4 GRADE AKTIF TERSEDIA DI KATALOG"
                   : "4 ACTIVE PROTOTYPE GRADES IN CMS"}
               </span>
               <Link
                 href="/products"
                 className="px-6 py-3 bg-[#FFD71C] text-[#101C2B] font-mono-tech text-xs font-semibold uppercase tracking-wider hover:bg-[#ffe14f]"
               >
-                {isId ? "Buka Katalog Material Lengkap" : "Open Full Materials Library"}{" "}
+                {isId ? "Lihat Katalog Lengkap" : "Open Full Materials Library"}{" "}
                 &rarr;
               </Link>
             </div>
@@ -1117,7 +1117,7 @@ export default async function HomePage() {
               </h3>
               <p className="text-sm text-[#4B5B6E] leading-relaxed">
                 {isId
-                  ? "Kirimkan sisa sprue, runner, dan produk rijek internal pabrik Anda yang bersih ke PrimeFlow. Kami murnikan, cuci alkali panas, degas, saring (100 hingga 120 mesh), stabilkan kembali dengan antioksidan, dan kembalikan sebagai pelet bersertifikat siap cetak."
+                  ? "Kirimkan sisa sprue, runner, dan produk gagal cetak yang bersih dari pabrik Anda ke PrimeFlow. Kami cuci dengan alkali panas, kami saring pada 100 hingga 120 mesh, kami stabilkan kembali dengan aditif antioksidan, lalu kami kembalikan menjadi biji plastik siap cetak lengkap dengan COA."
                   : "Send your clean internal sprues, runners, and off-spec parts to PrimeFlow. We purify, alkaline-wash, degas, filter (100 to 120 mesh), re-stabilize with antioxidants, and return certified pellets ready for your production line."}
               </p>
               <div className="pt-2">
@@ -1125,7 +1125,7 @@ export default async function HomePage() {
                   href="/contact?type=TOLL_RECYCLING"
                   className="font-mono-tech text-xs font-semibold uppercase tracking-wider text-[#123A68] hover:underline"
                 >
-                  {isId ? "Tanyakan Program Maklon" : "Inquire Toll-Recycling"} &rarr;
+                  {isId ? "Konsultasikan Program Maklon" : "Inquire Toll-Recycling"} &rarr;
                 </Link>
               </div>
             </div>
@@ -1143,7 +1143,7 @@ export default async function HomePage() {
               </h3>
               <p className="text-sm text-[#4B5B6E] leading-relaxed">
                 {isId
-                  ? "Uji langsung pelet PrimeFlow pada mesin cetak Anda sebelum menandatangani kontrak pasokan. Kami mengirimkan kit sampel gratis 5 hingga 10 kg beserta COA batch dan opsi pendampingan teknisi di pabrik."
+                  ? "Uji langsung biji plastik PrimeFlow di mesin cetak Anda sebelum menjalin kontrak pasokan rutin. Kami mengirimkan sampel uji coba gratis 5 hingga 10 kg lengkap dengan COA batch serta opsi pendampingan teknisi di pabrik Anda."
                   : "Evaluate PrimeFlow pellets on your own molding machine before signing a supply contract. We dispatch a complimentary 5 to 10 kg sample kit with batch COA and optional on-site technician support."}
               </p>
               <div className="pt-2">
@@ -1290,12 +1290,12 @@ export default async function HomePage() {
             </span>
             <h2 className="font-display text-3xl sm:text-5xl font-bold leading-tight">
               {isId
-                ? "Validasi Pelet PrimeFlow Langsung di Lini Mesin Anda."
+                ? "Uji Langsung Biji Plastik PrimeFlow di Mesin Produksi Anda."
                 : "Validate PrimeFlow Pellets on Your Molding Line."}
             </h2>
             <p className="text-base text-white/85 leading-relaxed">
               {isId
-                ? "Minta kit sampel gratis 5 hingga 10 kg beserta Certificate of Analysis (COA) batch, atau jadwalkan konsultasi Adaptive Locked-Supply bersama tim kami."
+                ? "Ajukan pengiriman sampel gratis 5 hingga 10 kg lengkap dengan Certificate of Analysis (COA), atau diskusikan jadwal kontrak pasokan rutin (Adaptive Locked-Supply) bersama tim kami."
                 : "Request a complimentary 5 to 10 kg sample kit with batch Certificate of Analysis (COA), or schedule an Adaptive Locked-Supply consultation with our team."}
             </p>
           </div>

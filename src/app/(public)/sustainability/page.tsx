@@ -210,7 +210,7 @@ export default async function SustainabilityPage() {
               </h3>
               <p className="text-sm text-[#4B5B6E] leading-relaxed">
                 {isId
-                  ? "Material sirkular harus layak secara komersial. Substitusi resin murni impor dengan pelet PrimeFlow menurunkan pengeluaran bahan baku sebesar 25% hingga 30% (bergantung pada grade dan indeks pasar) sekaligus melindungi pabrik domestik dari defisit impor."
+                  ? "Bahan baku ramah lingkungan tetap harus menguntungkan secara bisnis. Beralih dari bijih plastik murni impor ke biji plastik PrimeFlow mampu menghemat biaya bahan baku sebesar 25% hingga 30% (bergantung pada grade dan harga pasar) sekaligus menjaga ketersediaan stok pabrik di dalam negeri."
                   : "Circular materials must be commercially viable. Substituting imported virgin resin with PrimeFlow pellets reduces raw material expenditure by 25% to 30% (subject to grade and market index) while buffering domestic factories against import deficits."}
               </p>
             </div>

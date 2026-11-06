@@ -76,7 +76,7 @@ export default async function ContactPage({
         <div className="mx-auto max-w-[1400px] px-6 lg:px-10 space-y-5">
           <span className="font-mono-tech text-xs uppercase tracking-[0.2em] text-[#02BDEA]">
             {isId
-              ? "MEJA LAYANAN KOMERSIAL & TEKNIS"
+              ? "LAYANAN KOMERSIAL & BANTUAN TEKNIS"
               : "COMMERCIAL & TECHNICAL DISPATCH DESK"}
           </span>
           <h1 className="font-display text-4xl sm:text-6xl font-bold text-white max-w-4xl leading-[1.03]">

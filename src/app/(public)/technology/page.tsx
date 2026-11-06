@@ -197,29 +197,29 @@ const NINE_STAGES_ID = [
   },
   {
     number: "06",
-    title: "Degassing Vakum Tiga Tahap",
-    checkpoint: "CHECKPOINT MUTU 5B | EKSTRAKSI VOLATIL & UAP AIR",
+    title: "Ekstraksi Vakum Tiga Tahap",
+    checkpoint: "CHECKPOINT MUTU 5B | PENYEDOTAN GAS & UAP AIR",
     operationalStatus: "Standar Desain Proses",
     parameters: [
-      "Arsitektur Degassing: Tiga zona ekstraksi vakum di sepanjang barrel ekstruder",
-      "Target Volatil: Pengangkatan residu VOC, gas dekomposisi, dan uap air terperangkap",
-      "Manfaat Struktural: Mencegah porositas internal pelet, rongga mikro, dan lepuh permukaan",
+      "Sistem Vakum: Tiga titik ekstraksi vakum di sepanjang barrel ekstruder",
+      "Target Ekstraksi: Mengeluarkan sisa gas senyawa volatil (VOC) dan uap air terperangkap",
+      "Manfaat Mutu: Mencegah biji plastik keropos di bagian dalam dan bebas gelembung udara",
     ],
     engineeringDetail:
-      "Jejak senyawa volatil sekecil apa pun dapat memicu gelembung gas, cacat splay, dan ketebalan film tidak merata pada konversi kecepatan tinggi. Degassing vakum tiga tahap secara fisik menarik senyawa volatil dari aliran lelehan polimer.",
+      "Sisa gas atau uap air sekecil apa pun dapat memicu gelembung udara, bercak garis perak (silver streak), dan ketebalan plastik yang tidak rata. Sistem ekstraksi vakum tiga tahap menyedot keluar uap dan gas langsung dari lelehan polimer.",
   },
   {
     number: "07",
-    title: "Peletisasi & Klasifikasi Ayakan Getar",
-    checkpoint: "KONTROL GEOMETRI | PENGUMPANAN HOPPER SERAGAM",
+    title: "Granulasi Biji Plastik & Ayakan Getar",
+    checkpoint: "KONTROL UKURAN | TURUN LANCAR DI HOPPER MESIN",
     operationalStatus: "Standar Desain Proses",
     parameters: [
-      "Sistem Pemotong: Pemotong pelet water-ring / die-face atau strand presisi",
-      "Pengeringan: Dewatering sentrifugal pasca-pemotongan",
-      "Klasifikasi: Ayakan getar (vibrating sieve) memisahkan serbuk halus dan pelet ganda",
+      "Sistem Pemotong: Pemotong biji plastik water-ring / die-face atau strand presisi",
+      "Pengeringan: Pengering sentrifugal setelah pemotongan",
+      "Pengayakan: Ayakan getar (vibrating sieve) memisahkan serbuk debu dan butiran yang menempel",
     ],
     engineeringDetail:
-      "Geometri pelet silindris atau lentikular yang seragam mencegah penyumbatan (bridging) pada leher hopper pelanggan dan memastikan plastisasi yang stabil di sepanjang zona umpan sekrup.",
+      "Bentuk dan ukuran biji plastik yang seragam mencegah bahan menyangkut (bridging) di leher corong hopper mesin pelanggan serta menjaga kestabilan lelehan di sepanjang ulir ekstruder.",
   },
   {
     number: "08",
@@ -301,7 +301,7 @@ export default async function TechnologyPage() {
               </span>
               <h2 className="font-display text-3xl sm:text-4xl font-bold text-[#101C2B] mt-1">
                 {isId
-                  ? "Dari Sisa Potongan Pasca-Industri Menjadi Pelet Bersertifikat QR."
+                  ? "Dari Sisa Produksi Pabrik Menjadi Biji Plastik Bersertifikat COA."
                   : "From Post-Industrial Offcut to QR-Certified Pellet."}
               </h2>
             </div>

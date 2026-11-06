@@ -7,12 +7,12 @@ import { usePathname } from "next/navigation";
 import { LanguageToggle, useLanguage } from "@/lib/i18n/LanguageContext";
 
 const NAV_ITEMS = [
-  { href: "/products", labelEn: "Materials Library", labelId: "Katalog Material", code: "01" },
-  { href: "/technology", labelEn: "Technology", labelId: "Teknologi", code: "02" },
+  { href: "/products", labelEn: "Materials Library", labelId: "Katalog Produk", code: "01" },
+  { href: "/technology", labelEn: "Technology", labelId: "Teknologi Proses", code: "02" },
   { href: "/solutions", labelEn: "B2B Solutions", labelId: "Solusi B2B", code: "03" },
   { href: "/sustainability", labelEn: "Sustainability", labelId: "Keberlanjutan", code: "04" },
   { href: "/about", labelEn: "About", labelId: "Tentang Kami", code: "05" },
-  { href: "/insights", labelEn: "Insights", labelId: "Wawasan Teknis", code: "06" },
+  { href: "/insights", labelEn: "Insights", labelId: "Artikel Teknis", code: "06" },
 ];
 
 export function PublicNavbar() {
@@ -29,7 +29,7 @@ export function PublicNavbar() {
             <span className="flex items-center gap-2">
               <span className="inline-block h-1.5 w-1.5 bg-[#02BDEA]" />
               {isId
-                ? "PEMULIHAN PP & PE PASCA-INDUSTRI"
+                ? "BIJI PLASTIK DAUR ULANG PP & PE PASCA-INDUSTRI"
                 : "POST-INDUSTRIAL PP & PE RECOVERY"}
             </span>
             <span className="text-[#1E324A]">|</span>

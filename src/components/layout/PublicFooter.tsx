@@ -15,11 +15,11 @@ export function PublicFooter() {
         <div className="mx-auto max-w-[1400px] px-6 lg:px-10 py-5 flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4">
           <div className="flex items-start sm:items-center gap-3">
             <span className="font-mono-tech text-[11px] uppercase tracking-widest px-2.5 py-1 bg-[#123A68] text-[#02BDEA] shrink-0">
-              {isId ? "Catatan Kualifikasi" : "Qualification Notice"}
+              {isId ? "Keterangan Mutu" : "Qualification Notice"}
             </span>
             <p className="text-xs text-[#F3F5F6]/80 leading-relaxed">
               {isId
-                ? "Pelet daur ulang PP dan PE near-virgin PrimeFlow dirancang khusus untuk manufaktur industri dan rumah tangga non-pangan (non-food-grade). Istilah near-virgin menunjukkan konsistensi reologi dan kemurnian target dibandingkan skrap konvensional, bukan setara resin petrokimia murni bersertifikat atau kepatuhan kontak pangan."
+                ? "Biji plastik daur ulang PP dan PE near-virgin PrimeFlow dirancang khusus untuk industri manufaktur dan produk rumah tangga non-pangan (non-food-grade). Istilah near-virgin mengacu pada kemurnian bahan dan kestabilan alir lelehan dibanding bahan daur ulang biasa, bukan klaim setara bijih plastik murni bersertifikat pangan."
                 : "PrimeFlow near-virgin recycled PP and PE pellets are engineered strictly for non-food-grade industrial and household manufacturing. Near-virgin denotes target rheological and purity consistency relative to conventional scrap, not certified virgin petrochemical resin or food-contact compliance."}
             </p>
           </div>
@@ -27,7 +27,7 @@ export function PublicFooter() {
             href="/technology"
             className="font-mono-tech text-xs text-[#FFD71C] hover:underline shrink-0"
           >
-            {isId ? "Periksa Protokol QC 7-Tahap" : "Inspect 7-Stage QC Protocol"} &rarr;
+            {isId ? "Lihat Standar QC 7-Tahap" : "Inspect 7-Stage QC Protocol"} &rarr;
           </Link>
         </div>
       </div>
@@ -56,13 +56,13 @@ export function PublicFooter() {
           </Link>
           <p className="text-sm text-[#F3F5F6]/75 leading-relaxed max-w-sm">
             {isId
-              ? "Startup material industri berkelanjutan yang berfokus pada produksi dan pasokan pelet resin Polipropilena (PP) serta Polietilena (PE, HDPE, LDPE) daur ulang berkualitas near-virgin dari limbah pasca-industri terpilih."
+              ? "Perusahaan teknologi material industri yang memproduksi dan memasok biji plastik daur ulang Polipropilena (PP) serta Polietilena (PE, HDPE, LDPE) berkualitas near-virgin dari sisa produksi pabrik (pasca-industri) pilihan."
               : "Sustainable industrial materials startup focused on producing and supplying near-virgin quality recycled Polypropylene (PP) and Polyethylene (PE, HDPE, LDPE) resin pellets from selected post-industrial waste."}
           </p>
           <div className="pt-2 space-y-1.5 font-mono-tech text-xs text-[#F3F5F6]/70">
             <div>
               {isId
-                ? "KORIDOR TARGET: Bogor & Jabodetabek"
+                ? "WILAYAH LAYANAN: Bogor & Jabodetabek"
                 : "TARGET CORRIDOR: Bogor & Greater Jakarta (Jabodetabek)"}
             </div>
             <div>COMMERCIAL DESK: zidannnugroho@apps.ipb.ac.id</div>
@@ -219,12 +219,12 @@ export function PublicFooter() {
             </li>
             <li>
               <Link href="/insights" className="hover:text-[#FFD71C] transition-colors">
-                {isId ? "Wawasan Teknis" : "Technical Insights"}
+                {isId ? "Artikel Teknis" : "Technical Insights"}
               </Link>
             </li>
             <li>
               <Link href="/contact" className="hover:text-[#FFD71C] transition-colors">
-                {isId ? "Meja RFQ & Kontak" : "RFQ & Contact Desk"}
+                {isId ? "Layanan Penawaran & Kontak" : "RFQ & Contact Desk"}
               </Link>
             </li>
             <li>
