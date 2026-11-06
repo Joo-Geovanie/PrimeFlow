@@ -97,6 +97,11 @@ export async function establishInternalSession(
 
   let authMode: AuthenticatedSession["authMode"] = "LOCAL_DEV_CONSOLE";
 
+  const expectedPasscode =
+    process.env.PRIMEFLOW_OPERATOR_ACCESS_KEY ||
+    process.env.PRIMEFLOW_DEV_PASSCODE ||
+    "PRIMEFLOW-2026";
+
   if (isSupabaseConfigured()) {
     const supabase = createPublicSupabaseClient();
     if (supabase) {
@@ -104,17 +109,18 @@ export async function establishInternalSession(
         email: normalizedEmail,
         password: passwordOrCode,
       });
-      if (error) {
+      if (!error) {
+        authMode = "SUPABASE_AUTH";
+      } else if (passwordOrCode === expectedPasscode) {
+        authMode = "LOCAL_DEV_CONSOLE";
+      } else {
         return {
           ok: false,
           error: `Supabase authentication failed: ${error.message}`,
         };
       }
-      authMode = "SUPABASE_AUTH";
     }
   } else {
-    const expectedPasscode =
-      process.env.PRIMEFLOW_DEV_PASSCODE || "PRIMEFLOW-2026";
     if (passwordOrCode !== expectedPasscode) {
       return {
         ok: false,

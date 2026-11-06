@@ -96,6 +96,35 @@ async function main() {
     } sample requests.`
   );
 
+  // 2b. Ensure internal staff accounts exist in Supabase Auth
+  const defaultPassword =
+    process.env.PRIMEFLOW_OPERATOR_ACCESS_KEY ||
+    process.env.PRIMEFLOW_DEV_PASSCODE ||
+    "PRIMEFLOW-2026";
+  if (Array.isArray(db.internalUsers)) {
+    const { data: existingUsers } = await admin.auth.admin.listUsers();
+    const existingEmails = new Set(
+      (existingUsers?.users || []).map((u) => u.email?.toLowerCase())
+    );
+    for (const staff of db.internalUsers) {
+      if (!existingEmails.has(staff.email.toLowerCase())) {
+        const { error: createErr } = await admin.auth.admin.createUser({
+          email: staff.email,
+          password: defaultPassword,
+          email_confirm: true,
+          user_metadata: {
+            full_name: staff.full_name,
+            title: staff.title,
+            role: staff.role,
+          },
+        });
+        if (!createErr) {
+          console.log(`Provisioned Supabase Auth user: ${staff.email} (${staff.role})`);
+        }
+      }
+    }
+  }
+
   // 3. Check if PostgreSQL relational tables exist and sync if available
   const { error: tableCheckErr } = await admin
     .from("product_categories")
