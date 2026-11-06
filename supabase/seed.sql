@@ -1,0 +1,130 @@
+-- =============================================================================
+-- PRIMEFLOW SEED DATA (GROUNDED IN OFFICIAL BUSINESS PROPOSAL)
+-- Note: Prototype grades and target QC specifications are clearly qualified.
+-- =============================================================================
+
+insert into public.product_categories (slug, name, code, parent_family, summary, sort_order)
+values
+  ('polypropylene', 'Polypropylene (PP)', 'PP', 'Polypropylene', 'Post-industrial recycled polypropylene engineered for stable melt flow in rigid non-food packaging and household molding.', 1),
+  ('polyethylene', 'Polyethylene (PE Family)', 'PE', 'Polyethylene', 'Recycled polyethylene grades covering high-density and low-density industrial streams for containers, liners, and secondary films.', 2),
+  ('hdpe', 'High-Density Polyethylene (HDPE)', 'HDPE', 'Polyethylene', 'High-stiffness post-industrial HDPE granules purified via hot alkaline washing and micro-filtration for blow and injection molding.', 3),
+  ('ldpe', 'Low-Density Polyethylene (LDPE)', 'LDPE', 'Polyethylene', 'Flexible post-industrial LDPE resin processed from clean industrial film trimmings for non-food film extrusion and protective liners.', 4)
+on conflict (slug) do update set
+  name = excluded.name,
+  summary = excluded.summary,
+  sort_order = excluded.sort_order;
+
+insert into public.products (
+  slug, name, grade_code, polymer_family, status, operational_status,
+  short_description, technical_overview, feedstock_origin,
+  manufacturing_processes, recommended_applications,
+  mfi_value, mfi_test_condition, density_value, moisture_content, ash_content, filtration_rating,
+  color_profile, packaging_options, indicative_price_idr, primary_image_url, featured,
+  seo_title, seo_description
+)
+values
+  (
+    'primeflow-pp-100',
+    'PrimeFlow PP 100 Near-Virgin Homopolymer',
+    'PP 100',
+    'Polypropylene',
+    'PUBLISHED',
+    'PROTOTYPE_SPEC',
+    'Post-industrial recycled Polypropylene pellet grade (Prototype Lot PF-11223) formulated for stable melt viscosity in injection molding and rigid non-food packaging.',
+    'PrimeFlow PP 100 is produced from curated single-stream post-industrial polypropylene trimmings and off-spec industrial parts, with strict NIR screening to reject PVC contaminants (<0.1%). Processed through 70 to 80 C alkaline washing, controlled antioxidant and organic peroxide dosing, triple-stage vacuum degassing, and 100 to 120 mesh (<100 micron) melt filtration.',
+    'Selected post-industrial PP conversion trimmings and runners (single-heat-history stream)',
+    array['Injection Molding', 'Thermoforming (Non-Food)', 'Rigid Sheet Extrusion'],
+    array['Household storage containers and organizers', 'Industrial component trays and crates', 'Non-food rigid closures and caps', 'Appliance utility casings'],
+    'Target ~2.17 g/10 min (grade-tunable via peroxide dosing)',
+    'ASTM D1238 (230 C / 2.16 kg)',
+    '0.90 - 0.91 g/cm3 (Target specification)',
+    '< 0.05%',
+    '< 0.15%',
+    '100 - 120 mesh (< 100 micron)',
+    'Natural Translucent / Light Industrial',
+    array['25 kg Woven PP Bag with PE Inner Liner (Lot PF-11223 prototype)', '500 - 1,000 kg Jumbo Bag (upon contract schedule)'],
+    18080.00,
+    '/images/materials/pp-natural.jpg',
+    true,
+    'PrimeFlow PP 100 | Recycled Polypropylene Resin Specification',
+    'Technical specification for PrimeFlow PP 100 post-industrial recycled polypropylene pellets with target <0.05% moisture and 100-120 mesh melt filtration.'
+  ),
+  (
+    'primeflow-hdpe-100',
+    'PrimeFlow HDPE 100 Structural Blow & Injection Grade',
+    'HDPE 100',
+    'HDPE',
+    'PUBLISHED',
+    'PROTOTYPE_SPEC',
+    'High-density polyethylene recycled resin (Prototype Lot PF-12345) engineered for dimensional accuracy in non-food bottles, jerrycans, and industrial containers.',
+    'PrimeFlow HDPE 100 originates from clean post-industrial HDPE scrap sorted by processing application and base color. Hot alkaline washing removes surface oils and label adhesives without degrading the polymer backbone, while triple-stage vacuum degassing removes volatile organic compounds and residual moisture prior to precision pelletizing.',
+    'Sorted post-industrial HDPE container trimmings and industrial flash',
+    array['Blow Molding', 'Injection Molding', 'Profile Extrusion'],
+    array['Household chemical and detergent bottles (non-food)', 'Industrial jerrycans and pails', 'Material handling pallets and dunnage', 'Utility piping and conduits'],
+    'Grade-dependent per client molding specification (COA issued per batch)',
+    'ASTM D1238 (190 C / 2.16 kg)',
+    '0.94 - 0.96 g/cm3 (Target specification)',
+    '< 0.05%',
+    '< 0.15%',
+    '100 - 120 mesh (< 100 micron)',
+    'Natural White / Light Neutral',
+    array['25 kg Woven PP Bag with PE Inner Liner (Lot PF-12345 prototype)', '500 - 1,000 kg Jumbo Bag (upon contract schedule)'],
+    18080.00,
+    '/images/materials/hdpe-pellets.jpg',
+    true,
+    'PrimeFlow HDPE 100 | Recycled High-Density Polyethylene Specification',
+    'Technical data for PrimeFlow HDPE 100 post-industrial recycled high-density polyethylene resin for blow molding and rigid industrial applications.'
+  ),
+  (
+    'primeflow-ldpe-film-200',
+    'PrimeFlow LDPE 200 Flexible Film & Liner Grade',
+    'LDPE 200',
+    'LDPE',
+    'PUBLISHED',
+    'PROTOTYPE_SPEC',
+    'Low-gel post-industrial LDPE resin formulated from clean factory film trimmings and distribution stretch wrap for consistent blown-film gauge stability.',
+    'Addressing the under-recycled flexible film stream in Indonesia, PrimeFlow LDPE 200 processes uncontaminated post-industrial and post-commercial film cutoffs. Fine 100 to 120 mesh filtration and primary/secondary antioxidant stabilization prevent gel spots, die-head buildup, and film tearing during secondary blown-film extrusion.',
+    'Post-industrial LDPE film edge trim and clean distribution stretch film',
+    array['Blown Film Extrusion', 'Cast Film Extrusion', 'Masterbatch Carrier'],
+    array['Industrial protective packaging liners', 'Heavy-duty refuse and utility bags', 'Secondary shrink and stretch wrap (non-food)', 'Agricultural polybags and sheeting'],
+    '2.17 g/10 min reference stability on single-heat post-industrial film stream',
+    'ASTM D1238 (190 C / 2.16 kg)',
+    '0.915 - 0.930 g/cm3 (Target specification)',
+    '< 0.05%',
+    '< 0.15%',
+    '100 - 120 mesh (< 100 micron)',
+    'Semi-Translucent Natural',
+    array['25 kg Woven PP Bag with PE Inner Liner', '500 - 1,000 kg Jumbo Bag'],
+    18080.00,
+    '/images/materials/ldpe-pellets.jpg',
+    true,
+    'PrimeFlow LDPE 200 | Recycled Low-Density Polyethylene Film Grade',
+    'Low-gel recycled LDPE pellets from post-industrial film trimmings with <100 micron filtration for stable blown film extrusion.'
+  ),
+  (
+    'primeflow-pe-blend-150',
+    'PrimeFlow PE 150 Industrial Utility Compound',
+    'PE 150',
+    'Polyethylene',
+    'PUBLISHED',
+    'PROTOTYPE_SPEC',
+    'Balanced Polyethylene utility grade designed for medium-sized manufacturers seeking cost-efficient, machine-safe feedstock for secondary molded goods.',
+    'PrimeFlow PE 150 provides a consistent, deodorized, and thermally stabilized polyethylene stream for general-purpose non-food molding. Every batch undergoes internal laboratory verification for Melt Flow Index, moisture (<0.05%), ash content (<0.15%), and mold shrinkage prior to QR-coded Certificate of Analysis issuance.',
+    'Curated post-industrial Polyethylene conversion scrap',
+    array['Injection Molding', 'Compression Molding', 'Extrusion'],
+    array['Household utility ware (buckets, basins, hangers)', 'Logistics bins and dividers', 'Non-load-bearing industrial spacers', 'Recycled-content packaging components'],
+    'Configured per customer mold flow requirement (verified on batch COA)',
+    'ASTM D1238',
+    '0.92 - 0.95 g/cm3 (Target specification)',
+    '< 0.05%',
+    '< 0.15%',
+    '100 - 120 mesh (< 100 micron)',
+    'Light Industrial Neutral / Custom Base Sort',
+    array['25 kg Woven PP Bag with PE Inner Liner'],
+    18080.00,
+    '/images/materials/pe-white.jpg',
+    false,
+    'PrimeFlow PE 150 | Recycled Polyethylene Utility Resin',
+    'Post-industrial Polyethylene resin pellets with verified COA parameters for household and industrial molding.'
+  )
+on conflict (slug) do nothing;

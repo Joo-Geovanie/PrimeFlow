@@ -1,0 +1,996 @@
+import type {
+  Article,
+  AuditLogEntry,
+  InquiryNote,
+  InternalUser,
+  Product,
+  ProductCategory,
+  QuoteRequest,
+  SampleRequest,
+  SiteContentBlock,
+  SiteSetting,
+} from "@/types/domain";
+
+export const INITIAL_CATEGORIES: ProductCategory[] = [
+  {
+    id: "cat-pp",
+    slug: "polypropylene",
+    name: "Polypropylene (PP)",
+    code: "PP",
+    parent_family: "Polypropylene",
+    summary:
+      "Post-industrial recycled polypropylene engineered for stable melt viscosity in rigid non-food packaging, household goods, and precision injection molding.",
+    sort_order: 1,
+  },
+  {
+    id: "cat-pe",
+    slug: "polyethylene",
+    name: "Polyethylene (PE Family)",
+    code: "PE",
+    parent_family: "Polyethylene",
+    summary:
+      "Recycled polyethylene resin family spanning high-density and low-density grades for industrial containers, utility molding, and secondary protective films.",
+    sort_order: 2,
+  },
+  {
+    id: "cat-hdpe",
+    slug: "hdpe",
+    name: "High-Density Polyethylene (HDPE)",
+    code: "HDPE",
+    parent_family: "Polyethylene",
+    summary:
+      "High-stiffness post-industrial HDPE granules purified via hot alkaline washing and micro-filtration for blow-molded bottles, jerrycans, and industrial dunnage.",
+    sort_order: 3,
+  },
+  {
+    id: "cat-ldpe",
+    slug: "ldpe",
+    name: "Low-Density Polyethylene (LDPE)",
+    code: "LDPE",
+    parent_family: "Polyethylene",
+    summary:
+      "Low-gel post-industrial LDPE pellets reclaimed from clean factory film trimmings for consistent gauge control in blown film extrusion and industrial liners.",
+    sort_order: 4,
+  },
+];
+
+export const INITIAL_PRODUCTS: Product[] = [
+  {
+    id: "prod-pp-100",
+    slug: "primeflow-pp-100",
+    name: "PrimeFlow PP 100 Near-Virgin Homopolymer",
+    grade_code: "PP 100",
+    category_id: "cat-pp",
+    polymer_family: "Polypropylene",
+    status: "PUBLISHED",
+    operational_status: "PROTOTYPE_SPEC",
+    short_description:
+      "Post-industrial recycled Polypropylene pellet grade (Prototype Lot PF-11223) formulated for consistent melt viscosity in injection molding and rigid non-food packaging.",
+    technical_overview:
+      "PrimeFlow PP 100 is produced from curated single-stream post-industrial polypropylene conversion trimmings and runners, enforced by handheld NIR spectroscopy screening and a zero-tolerance policy toward PVC contamination (<0.1%). The feedstock undergoes multi-stage hot alkaline washing (70 to 80 C), precision antioxidant and organic peroxide dosing via loss-in-weight feeders, triple-stage vacuum degassing, and 100 to 120 mesh (<100 micron) melt filtration to protect client injection nozzles and hot runners.",
+    feedstock_origin:
+      "Selected post-industrial PP conversion trimmings and runners (single-heat-history stream)",
+    manufacturing_processes: [
+      "Injection Molding",
+      "Rigid Sheet Extrusion",
+      "Thermoforming (Non-Food)",
+    ],
+    recommended_applications: [
+      "Household storage containers, baskets, and organizers",
+      "Industrial component trays, bins, and logistics crates",
+      "Non-food closures, caps, and dispensing actuators",
+      "Appliance utility brackets and non-structural housings",
+    ],
+    mfi_value: "Target ~2.17 g/10 min (grade-tunable via peroxide dosing)",
+    mfi_test_condition: "ASTM D1238 (230 C / 2.16 kg)",
+    density_value: "0.90 - 0.91 g/cm3 (Target specification)",
+    moisture_content: "< 0.05%",
+    ash_content: "< 0.15%",
+    filtration_rating: "100 - 120 mesh (< 100 micron)",
+    color_profile: "Natural Translucent / Light Industrial Base",
+    packaging_options: [
+      "25 kg Woven PP Bag with PE Inner Liner (Prototype Lot PF-11223)",
+      "500 - 1,000 kg Jumbo Bag with moisture barrier liner (contract schedule)",
+    ],
+    indicative_price_idr: 18080,
+    primary_image_url: "/images/materials/pp-natural.jpg",
+    secondary_image_url: "/images/materials/sack-pp-100.png",
+    featured: true,
+    food_contact_Execution:
+      "Engineered strictly for non-food-grade industrial and household applications. Near-virgin refers to target processing stability and cleanliness, not certified virgin resin or food-contact compliance.",
+    seo_title: "PrimeFlow PP 100 | Recycled Polypropylene Resin Specification",
+    seo_description:
+      "Technical specification for PrimeFlow PP 100 post-industrial recycled polypropylene pellets with target <0.05% moisture and 100-120 mesh melt filtration.",
+    specifications: [
+      {
+        id: "spec-pp-1",
+        product_id: "prod-pp-100",
+        property_group: "Rheological & Thermal",
+        property_name: "Melt Flow Index (MFI)",
+        test_method: "ASTM D1238",
+        unit: "g/10 min",
+        target_value: "2.17 reference (tunable per client molding grade)",
+        qualification_note:
+          "Target QC specification calibrated via organic peroxide dosing; batch value verified on COA.",
+        sort_order: 1,
+      },
+      {
+        id: "spec-pp-2",
+        product_id: "prod-pp-100",
+        property_group: "Purity & Volatiles",
+        property_name: "Moisture Content",
+        test_method: "Halogen Moisture Analyzer",
+        unit: "%",
+        target_value: "< 0.05",
+        qualification_note:
+          "Target post-drying and sealed inner-liner packaging specification.",
+        sort_order: 2,
+      },
+      {
+        id: "spec-pp-3",
+        product_id: "prod-pp-100",
+        property_group: "Purity & Volatiles",
+        property_name: "Ash Content (Inorganic Residue)",
+        test_method: "ASTM D5630",
+        unit: "%",
+        target_value: "< 0.15",
+        qualification_note: "Target internal QC release limit per batch.",
+        sort_order: 3,
+      },
+      {
+        id: "spec-pp-4",
+        product_id: "prod-pp-100",
+        property_group: "Filtration & Screening",
+        property_name: "Melt Filtration Screen Rating",
+        test_method: "Automatic Screen Changer",
+        unit: "mesh / micron",
+        target_value: "100 - 120 mesh (< 100 micron)",
+        qualification_note: "Process design parameter to prevent nozzle blockage.",
+        sort_order: 4,
+      },
+      {
+        id: "spec-pp-5",
+        product_id: "prod-pp-100",
+        property_group: "Filtration & Screening",
+        property_name: "PVC Cross-Contamination Limit",
+        test_method: "Handheld NIR Spectroscopy",
+        unit: "%",
+        target_value: "< 0.1 (Strict batch rejection policy)",
+        qualification_note:
+          "Checkpoint Mutu 1 sorting threshold to prevent HCl barrel corrosion.",
+        sort_order: 5,
+      },
+      {
+        id: "spec-pp-6",
+        product_id: "prod-pp-100",
+        property_group: "Mechanical & Dimensional",
+        property_name: "Tensile, Impact & Mold Shrinkage",
+        test_method: "ISO 527 / ISO 179 / Internal Shrinkage Mold",
+        unit: "Pass / COA Reported",
+        target_value: "Validated per production lot",
+        qualification_note:
+          "Reported on batch QR Digital Product Passport prior to shipment.",
+        sort_order: 6,
+      },
+    ],
+    documents: [
+      {
+        id: "doc-pp-1",
+        product_id: "prod-pp-100",
+        title: "PrimeFlow PP 100 Preliminary Technical Data Sheet (Prototype Specification)",
+        document_type: "TDS",
+        file_url: "/api/documents/primeflow-pp-100-tds",
+        version_label: "v1.0-PROTOTYPE",
+        is_verified: true,
+        requires_auth: false,
+        qualification_note:
+          "Target engineering specification based on PrimeFlow process design. Batch-specific Certificate of Analysis (COA) is issued with physical sample kits.",
+      },
+      {
+        id: "doc-pp-2",
+        product_id: "prod-pp-100",
+        title: "Sample Certificate of Analysis (COA) Template & QR Passport Schema",
+        document_type: "COA_SAMPLE",
+        file_url: "/api/documents/primeflow-coa-template",
+        version_label: "v1.0-SCHEMA",
+        is_verified: true,
+        requires_auth: false,
+        qualification_note:
+          "Illustrates the 6-parameter internal QC report provided on every 25 kg bag.",
+      },
+    ],
+    gallery: [
+      {
+        id: "img-pp-1",
+        product_id: "prod-pp-100",
+        url: "/images/materials/pp-natural.jpg",
+        alt_text: "Macro view of natural translucent polypropylene resin pellets",
+        caption: "Illustrative material visual: natural translucent PP pellet morphology.",
+        is_illustrative: true,
+        sort_order: 1,
+      },
+      {
+        id: "img-pp-2",
+        product_id: "prod-pp-100",
+        url: "/images/materials/sack-pp-100.png",
+        alt_text: "PrimeFlow PP 100 25 kg prototype packaging sack (Lot PF-11223)",
+        caption: "Official PrimeFlow 25 kg woven PP + PE inner liner prototype packaging (Grade PP 100, Lot PF-11223).",
+        is_illustrative: false,
+        sort_order: 2,
+      },
+    ],
+    created_at: "2026-10-15T08:00:00.000Z",
+    updated_at: "2026-11-05T08:00:00.000Z",
+  },
+  {
+    id: "prod-hdpe-100",
+    slug: "primeflow-hdpe-100",
+    name: "PrimeFlow HDPE 100 Structural Blow & Injection Grade",
+    grade_code: "HDPE 100",
+    category_id: "cat-hdpe",
+    polymer_family: "HDPE",
+    status: "PUBLISHED",
+    operational_status: "PROTOTYPE_SPEC",
+    short_description:
+      "High-density polyethylene recycled resin (Prototype Lot PF-12345) engineered for dimensional stability in non-food bottles, jerrycans, and industrial containers.",
+    technical_overview:
+      "PrimeFlow HDPE 100 belongs to the Polyethylene (PE) material family and is processed from sorted post-industrial HDPE container trimmings and flash. Multi-stage hot alkaline washing (70 to 80 C) removes surface oils, lubricants, and label adhesives without degrading the polymer chains. Triple-stage vacuum degassing strips volatile compounds and odors, while 100 to 120 mesh filtration prevents die-line streaks and black specks in blow-molded hollowware.",
+    feedstock_origin:
+      "Sorted post-industrial HDPE blow-molding flash and container trimmings",
+    manufacturing_processes: [
+      "Extrusion Blow Molding",
+      "Injection Molding",
+      "Profile & Pipe Extrusion",
+    ],
+    recommended_applications: [
+      "Non-food household chemical, detergent, and lubricant bottles",
+      "Industrial jerrycans, carboys, and chemical pails",
+      "Material handling pallets, dunnage, and warehouse totes",
+      "Non-pressure utility conduits and protective profiles",
+    ],
+    mfi_value: "Configured per blow or injection grade (verified per batch COA)",
+    mfi_test_condition: "ASTM D1238 (190 C / 2.16 kg)",
+    density_value: "0.94 - 0.96 g/cm3 (Target specification)",
+    moisture_content: "< 0.05%",
+    ash_content: "< 0.15%",
+    filtration_rating: "100 - 120 mesh (< 100 micron)",
+    color_profile: "Natural White / Homogeneous Base Sort",
+    packaging_options: [
+      "25 kg Woven PP Bag with PE Inner Liner (Prototype Lot PF-12345)",
+      "500 - 1,000 kg Jumbo Bag (upon contract schedule)",
+    ],
+    indicative_price_idr: 18080,
+    primary_image_url: "/images/materials/hdpe-pellets.jpg",
+    secondary_image_url: "/images/materials/sack-pe-100.png",
+    featured: true,
+    food_contact_Execution:
+      "Restricted to non-food-grade industrial and household packaging. Not certified for food or pharmaceutical contact.",
+    seo_title: "PrimeFlow HDPE 100 | Recycled High-Density Polyethylene Specification",
+    seo_description:
+      "Technical specification for PrimeFlow HDPE 100 post-industrial recycled high-density polyethylene pellets for blow molding and rigid containers.",
+    specifications: [
+      {
+        id: "spec-hdpe-1",
+        product_id: "prod-hdpe-100",
+        property_group: "Rheological & Physical",
+        property_name: "Melt Flow Index (MFI)",
+        test_method: "ASTM D1238 (190 C / 2.16 kg)",
+        unit: "g/10 min",
+        target_value: "Grade-matched to blow or injection tooling (COA verified)",
+        qualification_note:
+          "Target rheology stabilized with primary and secondary antioxidants (0.1 to 0.3%).",
+        sort_order: 1,
+      },
+      {
+        id: "spec-hdpe-2",
+        product_id: "prod-hdpe-100",
+        property_group: "Purity & Volatiles",
+        property_name: "Moisture Content",
+        test_method: "Halogen Moisture Analyzer",
+        unit: "%",
+        target_value: "< 0.05",
+        qualification_note: "Target specification prior to hermetically lined bagging.",
+        sort_order: 2,
+      },
+      {
+        id: "spec-hdpe-3",
+        product_id: "prod-hdpe-100",
+        property_group: "Purity & Volatiles",
+        property_name: "Ash Content",
+        test_method: "ASTM D5630",
+        unit: "%",
+        target_value: "< 0.15",
+        qualification_note: "Target internal QC threshold.",
+        sort_order: 3,
+      },
+      {
+        id: "spec-hdpe-4",
+        product_id: "prod-hdpe-100",
+        property_group: "Filtration & Screening",
+        property_name: "Melt Filtration Screen Rating",
+        test_method: "Dual-Screen Changer",
+        unit: "mesh / micron",
+        target_value: "100 - 120 mesh (< 100 micron)",
+        qualification_note: "Eliminates unmelted particulates and parison die lines.",
+        sort_order: 4,
+      },
+      {
+        id: "spec-hdpe-5",
+        product_id: "prod-hdpe-100",
+        property_group: "Sensory & Surface",
+        property_name: "Alkaline Wash & Deodorization Protocol",
+        test_method: "70 - 80 C Alkaline Wash + Triple Vacuum Degassing",
+        unit: "Visual & Sensory QC",
+        target_value: "Zero black specks / Neutralized odor profile",
+        qualification_note: "Evaluated at Checkpoint Mutu 2 and Checkpoint Mutu 6.",
+        sort_order: 5,
+      },
+    ],
+    documents: [
+      {
+        id: "doc-hdpe-1",
+        product_id: "prod-hdpe-100",
+        title: "PrimeFlow HDPE 100 Preliminary Technical Data Sheet (Prototype Specification)",
+        document_type: "TDS",
+        file_url: "/api/documents/primeflow-hdpe-100-tds",
+        version_label: "v1.0-PROTOTYPE",
+        is_verified: true,
+        requires_auth: false,
+        qualification_note:
+          "Target specification sheet derived from PrimeFlow 7-stage purification design.",
+      },
+    ],
+    gallery: [
+      {
+        id: "img-hdpe-1",
+        product_id: "prod-hdpe-100",
+        url: "/images/materials/hdpe-pellets.jpg",
+        alt_text: "High-density polyethylene resin pellets in natural white",
+        caption: "Illustrative material visual: opaque natural white HDPE granules.",
+        is_illustrative: true,
+        sort_order: 1,
+      },
+      {
+        id: "img-hdpe-2",
+        product_id: "prod-hdpe-100",
+        url: "/images/materials/sack-woven-hdpe.png",
+        alt_text: "PrimeFlow HDPE 100 25 kg woven prototype sack (Lot PF-12345)",
+        caption: "Official PrimeFlow 25 kg prototype packaging design (Grade HDPE 100, Lot PF-12345).",
+        is_illustrative: false,
+        sort_order: 2,
+      },
+    ],
+    created_at: "2026-10-16T08:00:00.000Z",
+    updated_at: "2026-11-05T08:00:00.000Z",
+  },
+  {
+    id: "prod-ldpe-200",
+    slug: "primeflow-ldpe-film-200",
+    name: "PrimeFlow LDPE 200 Flexible Film & Liner Grade",
+    grade_code: "LDPE 200",
+    category_id: "cat-ldpe",
+    polymer_family: "LDPE",
+    status: "PUBLISHED",
+    operational_status: "PROTOTYPE_SPEC",
+    short_description:
+      "Low-gel post-industrial LDPE resin reclaimed from clean factory film trimmings and distribution stretch wrap for consistent blown-film gauge stability.",
+    technical_overview:
+      "Flexible films such as LDPE suffer from a national recycling rate below 10% in Indonesia due to contamination in post-consumer streams. PrimeFlow LDPE 200 sources clean post-industrial film edge-trim and commercial distribution stretch wrap that have never contacted organic household waste. Processed with single-heat-history preservation (reference MFI stability ~2.17 g/10 min), 100 to 120 mesh melt filtration, and triple-stage degassing, LDPE 200 prevents bubble tear, gel spots, and gauge variation during secondary film blowing.",
+    feedstock_origin:
+      "Clean post-industrial LDPE film edge trimmings and logistics distribution stretch film",
+    manufacturing_processes: [
+      "Blown Film Extrusion",
+      "Cast Film Extrusion",
+      "Compound & Masterbatch Carrier",
+    ],
+    recommended_applications: [
+      "Industrial inner liners and protective packaging sleeves",
+      "Heavy-duty commercial refuse bags and collection sacks",
+      "Non-food secondary shrink and transit bundling film",
+      "Agricultural polybags and nursery sheeting",
+    ],
+    mfi_value: "Reference ~2.17 g/10 min on single-heat post-industrial film stream",
+    mfi_test_condition: "ASTM D1238 (190 C / 2.16 kg)",
+    density_value: "0.915 - 0.930 g/cm3 (Target specification)",
+    moisture_content: "< 0.05%",
+    ash_content: "< 0.15%",
+    filtration_rating: "100 - 120 mesh (< 100 micron)",
+    color_profile: "Semi-Translucent Natural",
+    packaging_options: [
+      "25 kg Woven PP Bag with PE Inner Liner",
+      "500 - 1,000 kg Jumbo Bag",
+    ],
+    indicative_price_idr: 18080,
+    primary_image_url: "/images/materials/ldpe-pellets.jpg",
+    secondary_image_url: "/images/materials/sack-pe-100.png",
+    featured: true,
+    food_contact_Execution:
+      "Non-food-grade industrial film and liner applications only.",
+    seo_title: "PrimeFlow LDPE 200 | Recycled Low-Density Polyethylene Film Grade",
+    seo_description:
+      "Low-gel recycled LDPE pellets from post-industrial film trimmings with <100 micron filtration for blown film extrusion.",
+    specifications: [
+      {
+        id: "spec-ldpe-1",
+        product_id: "prod-ldpe-200",
+        property_group: "Rheological & Film Stability",
+        property_name: "Melt Flow Index (MFI)",
+        test_method: "ASTM D1238",
+        unit: "g/10 min",
+        target_value: "~2.17 reference (single-heat post-industrial stream)",
+        qualification_note:
+          "Preserves polymer chain integrity to avoid film bubble instability.",
+        sort_order: 1,
+      },
+      {
+        id: "spec-ldpe-2",
+        product_id: "prod-ldpe-200",
+        property_group: "Purity & Volatiles",
+        property_name: "Moisture Content",
+        test_method: "Halogen Moisture Analyzer",
+        unit: "%",
+        target_value: "< 0.05",
+        qualification_note: "Prevents steam micro-voids and film lensing during extrusion.",
+        sort_order: 2,
+      },
+      {
+        id: "spec-ldpe-3",
+        product_id: "prod-ldpe-200",
+        property_group: "Purity & Volatiles",
+        property_name: "Ash Content",
+        test_method: "ASTM D5630",
+        unit: "%",
+        target_value: "< 0.15",
+        qualification_note: "Target internal QC release limit.",
+        sort_order: 3,
+      },
+      {
+        id: "spec-ldpe-4",
+        product_id: "prod-ldpe-200",
+        property_group: "Filtration & Screening",
+        property_name: "Micro-Filtration Rating",
+        test_method: "Continuous Screen Changer",
+        unit: "mesh / micron",
+        target_value: "100 - 120 mesh (< 100 micron)",
+        qualification_note: "Critical for eliminating gel specks in thin-gauge films.",
+        sort_order: 4,
+      },
+    ],
+    documents: [
+      {
+        id: "doc-ldpe-1",
+        product_id: "prod-ldpe-200",
+        title: "PrimeFlow LDPE 200 Preliminary Technical Data Sheet (Prototype Specification)",
+        document_type: "TDS",
+        file_url: "/api/documents/primeflow-ldpe-film-200-tds",
+        version_label: "v1.0-PROTOTYPE",
+        is_verified: true,
+        requires_auth: false,
+        qualification_note:
+          "Target engineering specification for blown-film evaluation.",
+      },
+    ],
+    gallery: [
+      {
+        id: "img-ldpe-1",
+        product_id: "prod-ldpe-200",
+        url: "/images/materials/ldpe-pellets.jpg",
+        alt_text: "Semi-translucent LDPE resin pellets",
+        caption: "Illustrative material visual: semi-translucent LDPE film-grade granules.",
+        is_illustrative: true,
+        sort_order: 1,
+      },
+    ],
+    created_at: "2026-10-18T08:00:00.000Z",
+    updated_at: "2026-11-05T08:00:00.000Z",
+  },
+  {
+    id: "prod-pe-150",
+    slug: "primeflow-pe-blend-150",
+    name: "PrimeFlow PE 150 Industrial Utility Compound",
+    grade_code: "PE 150",
+    category_id: "cat-pe",
+    polymer_family: "Polyethylene",
+    status: "PUBLISHED",
+    operational_status: "PROTOTYPE_SPEC",
+    short_description:
+      "Balanced Polyethylene utility grade designed for medium-sized manufacturers seeking cost-efficient, machine-safe feedstock for secondary molded goods.",
+    technical_overview:
+      "PrimeFlow PE 150 falls under the broader Polyethylene category, offering medium-sized household and industrial molders a dependable alternative to unverified scrap regrind. Sorted by color family and stabilized with primary/secondary antioxidants plus optical brighteners where specified, PE 150 delivers clean mold filling and predictable shrinkage.",
+    feedstock_origin:
+      "Curated post-industrial Polyethylene conversion scrap",
+    manufacturing_processes: [
+      "Injection Molding",
+      "Compression Molding",
+      "General Extrusion",
+    ],
+    recommended_applications: [
+      "Household utility ware (buckets, basins, dustpans, hangers)",
+      "Warehouse sorting bins and partition dividers",
+      "Secondary packaging dunnage and corner protectors",
+      "Non-food agricultural and construction accessories",
+    ],
+    mfi_value: "Configured per customer molding requirement (COA verified)",
+    mfi_test_condition: "ASTM D1238 (190 C / 2.16 kg)",
+    density_value: "0.92 - 0.95 g/cm3 (Target specification)",
+    moisture_content: "< 0.05%",
+    ash_content: "< 0.15%",
+    filtration_rating: "100 - 120 mesh (< 100 micron)",
+    color_profile: "Opaque White / Neutral Industrial",
+    packaging_options: [
+      "25 kg Woven PP Bag with PE Inner Liner",
+      "500 - 1,000 kg Jumbo Bag",
+    ],
+    indicative_price_idr: 18080,
+    primary_image_url: "/images/materials/pe-white.jpg",
+    secondary_image_url: "/images/materials/sack-pe-100.png",
+    featured: false,
+    food_contact_Execution:
+      "Non-food-grade utility and industrial molding applications only.",
+    seo_title: "PrimeFlow PE 150 | Recycled Polyethylene Utility Resin",
+    seo_description:
+      "Post-industrial Polyethylene resin pellets with target <0.05% moisture and batch COA verification for household and industrial molding.",
+    specifications: [
+      {
+        id: "spec-pe-1",
+        product_id: "prod-pe-150",
+        property_group: "Purity & Volatiles",
+        property_name: "Moisture Content",
+        test_method: "Halogen Moisture Analyzer",
+        unit: "%",
+        target_value: "< 0.05",
+        qualification_note: "Target internal QC release threshold.",
+        sort_order: 1,
+      },
+      {
+        id: "spec-pe-2",
+        product_id: "prod-pe-150",
+        property_group: "Purity & Volatiles",
+        property_name: "Ash Content",
+        test_method: "ASTM D5630",
+        unit: "%",
+        target_value: "< 0.15",
+        qualification_note: "Target internal QC release threshold.",
+        sort_order: 2,
+      },
+      {
+        id: "spec-pe-3",
+        product_id: "prod-pe-150",
+        property_group: "Filtration & Screening",
+        property_name: "Melt Filtration Rating",
+        test_method: "Automatic Screen Changer",
+        unit: "mesh / micron",
+        target_value: "100 - 120 mesh (< 100 micron)",
+        qualification_note: "Protects hot runners and gate orifices.",
+        sort_order: 3,
+      },
+    ],
+    documents: [
+      {
+        id: "doc-pe-1",
+        product_id: "prod-pe-150",
+        title: "PrimeFlow PE 150 Preliminary Technical Data Sheet (Prototype Specification)",
+        document_type: "TDS",
+        file_url: "/api/documents/primeflow-pe-blend-150-tds",
+        version_label: "v1.0-PROTOTYPE",
+        is_verified: true,
+        requires_auth: false,
+        qualification_note: "Target specification sheet.",
+      },
+    ],
+    gallery: [
+      {
+        id: "img-pe-1",
+        product_id: "prod-pe-150",
+        url: "/images/materials/pe-white.jpg",
+        alt_text: "Opaque white polyethylene resin pellets",
+        caption: "Illustrative material visual: opaque white PE pellet grade.",
+        is_illustrative: true,
+        sort_order: 1,
+      },
+    ],
+    created_at: "2026-10-20T08:00:00.000Z",
+    updated_at: "2026-11-05T08:00:00.000Z",
+  },
+];
+
+export const INITIAL_ARTICLES: Article[] = [
+  {
+    id: "art-1",
+    slug: "post-industrial-vs-conventional-recycled-resin-rheology",
+    title:
+      "Why Post-Industrial Feedstock Preserves Melt Flow Stability in Thin-Wall Molding",
+    excerpt:
+      "Conventional multi-cycle recycled pellets suffer from thermo-mechanical chain scission and volatile contamination. Examining how single-heat-history post-industrial scrap and 100-120 mesh melt filtration protect injection and film extrusion lines.",
+    content: `## The Structural Dilemma in Indonesian Plastics Conversion
+
+Raw polymer resin typically accounts for 60% to 70% of total manufacturing cost in plastic conversion (PlasticsEurope, 2023; Faqih et al., 2025). At the same time, Indonesia's plastics sector remains structurally exposed to global petrochemical volatility, with 50% to 60% of domestic virgin resin demand reliant on imports (INAPLAS, 2023).
+
+Medium-sized manufacturers face an operational dilemma: absorb high imported virgin resin costs to preserve dimensional tolerances, or blend conventional recycled pellets and risk melt pressure spikes, die-head blockages, black specks, and brittle parts.
+
+## Why Conventional Recycled Pellets Fail in Precision Tooling
+
+Standard post-consumer recyclate has often undergone repeated thermo-mechanical processing cycles and exposure to organic waste, detergents, or household chemicals. According to Ragaert et al. (2017) and Schyns & Shaver (2021), two failure mechanisms dominate:
+
+1. **Particulate and Cross-Polymer Contamination**: Residual adhesives, paper fibers, and trace PVC degrade at extrusion temperatures, releasing corrosive hydrochloric acid (HCl) gas and carbonized char that clog 100-micron nozzle orifices.
+2. **Polymer Chain Scission and MFI Drift**: Repeated heat histories cleave polypropylene and polyethylene chains, causing lot-to-lot Melt Flow Index (MFI) fluctuations that ruin wall-thickness uniformity.
+
+## The Post-Industrial Single-Heat Advantage
+
+In domestic packaging and plastic conversion plants, internal production scrap (sprues, runners, edge trimmings, and start-up purge) represents 5% to 12% of processed resin, or an estimated 300,000 to 600,000 tons per year across Indonesia.
+
+Because post-industrial scrap has never entered the municipal waste stream, it carries minimal external biological or chemical contamination (BPOM, 2019). Experimental evaluation of single-heat-history post-industrial film scrap demonstrates stable Melt Flow Index behavior around 2.17 g/10 min (Marisma et al., 2021), indicating that the macromolecular backbone remains largely intact.
+
+## PrimeFlow's 7-Stage Purification Protocol
+
+To bridge the gap between raw post-industrial trimmings and machine-ready feedstock, PrimeFlow engineers a seven-stage purification and verification workflow:
+
+- **Stage 1 (Strict NIR Curation)**: Handheld NIR spectroscopy verifies polymer identity (PP, HDPE, LDPE) and enforces a strict rejection threshold for PVC (<0.1%).
+- **Stage 2 (70 to 80 C Alkaline Washing)**: Multi-stage hot alkaline and surfactant washing strips surface oils and adhesives without degrading the polymer.
+- **Stage 3 (Moisture Control <0.05%)**: Centrifugal and thermal drying verified by halogen moisture analysis.
+- **Stage 4 (Precision Additive Formulation)**: Loss-in-weight dosing of primary/secondary antioxidants (0.1 to 0.3%), organic peroxide rheology modifiers for PP, optical brighteners, and odor neutralizers.
+- **Stage 5 (Triple-Stage Vacuum Degassing & 100-120 Mesh Filtration)**: High-durability single-screw extrusion paired with triple vacuum vents and <100 micron screen filtration.
+- **Stage 6 & 7 (Laboratory QC & QR COA)**: Every batch is tested for MFI (ASTM D1238), ash content (<0.15%, ASTM D5630), moisture (<0.05%), tensile/impact properties (ISO 527 / ISO 179), and mold shrinkage before hermetically lined 25 kg bagging.`,
+    category_name: "Polymer Engineering",
+    cover_image_url: "/images/materials/hero-pellets.jpg",
+    author_name: "Muhammad Zidan Nugroho",
+    author_role: "Chief Executive & Quality Chemistry Lead",
+    reading_time_minutes: 6,
+    published: true,
+    published_at: "2026-10-22T09:00:00.000Z",
+    seo_title:
+      "Post-Industrial vs Conventional Recycled Resin Rheology | PrimeFlow Insights",
+    seo_description:
+      "How single-heat post-industrial PP and PE feedstock combined with 100-120 mesh filtration and vacuum degassing prevents nozzle clogging and MFI drift.",
+    created_at: "2026-10-22T09:00:00.000Z",
+    updated_at: "2026-11-01T09:00:00.000Z",
+  },
+  {
+    id: "art-2",
+    slug: "adaptive-locked-supply-working-capital-optimization",
+    title:
+      "Solving MOQ Capital Lockup: Adaptive Locked-Supply for Medium-Scale Factories",
+    excerpt:
+      "Large petrochemical suppliers enforce high Minimum Order Quantities that trap working capital and overload warehouse capacity. How staggered delivery scheduling aligns resin procurement with factory cash flow.",
+    content: `## The Working Capital Trap in Resin Procurement
+
+For medium-sized injection, blow-molding, and packaging manufacturers across Jabodetabek and Java, raw material price is only half of the procurement challenge. Major virgin resin producers and primary importers typically require high Minimum Order Quantities (MOQs) and rigid bulk delivery windows.
+
+When a mid-tier factory is forced to purchase massive resin allocations upfront:
+- Working capital is immobilized in raw material inventory rather than operational liquidity.
+- Warehouse floor space becomes congested, increasing storage and handling overhead.
+- When businesses turn to informal scrap collectors for smaller volumes, they face unpredictable stock availability and severe lot-to-lot quality swings.
+
+## How Adaptive Locked-Supply Works
+
+PrimeFlow structures commercial partnerships specifically for medium-scale manufacturers through **Adaptive Locked-Supply** agreements:
+
+1. **Reserved Monthly Quota**: The partner factory locks in a guaranteed monthly tonnage allocation (for example, 10 to 30 tons per month) with clear, indexed pricing clauses that protect both parties against abrupt crude oil swings.
+2. **Staggered Warehouse-Synced Dispatch**: Rather than dumping the entire monthly quota in a single shipment, PrimeFlow dispatches scheduled partial drops aligned with the client's physical warehouse capacity and production cash-flow cycle.
+3. **Batch-Level COA Continuity**: Every staggered delivery is accompanied by its digital Certificate of Analysis (COA) via QR code, ensuring that Lot A delivered in Week 1 and Lot B delivered in Week 3 run with consistent melt flow and shrinkage parameters.
+
+## Closed-Loop Toll-Recycling Integration
+
+For factories generating clean internal sprues, runners, or off-spec parts (typically 5% to 12% of throughput), PrimeFlow offers a **Closed-Loop Toll-Recycling** service. Client scrap is collected, purified through PrimeFlow's alkaline washing, degassing, and 100 to 120 mesh filtration line, re-stabilized with antioxidants, and returned as certified pellets ready for immediate re-molding.`,
+    category_name: "Supply Chain Strategy",
+    cover_image_url: "/images/materials/pp-natural.jpg",
+    author_name: "Audina Maharani",
+    author_role: "Operations, Finance & Strategic Supply Lead",
+    reading_time_minutes: 5,
+    published: true,
+    published_at: "2026-10-28T09:00:00.000Z",
+    seo_title:
+      "Adaptive Locked-Supply & Staggered Resin Delivery | PrimeFlow Insights",
+    seo_description:
+      "How medium-sized plastic manufacturers optimize working capital and warehouse space using staggered resin deliveries and closed-loop toll recycling.",
+    created_at: "2026-10-28T09:00:00.000Z",
+    updated_at: "2026-11-02T09:00:00.000Z",
+  },
+  {
+    id: "art-3",
+    slug: "preventing-pvc-contamination-and-volatile-defects-in-recycled-polyolefins",
+    title:
+      "Zero-Tolerance PVC Screening and Triple-Stage Degassing in Polyolefin Recovery",
+    excerpt:
+      "Even trace PVC contamination (<0.1%) in polypropylene or polyethylene streams can generate corrosive acid gas and black specks at extrusion temperatures. Inside PrimeFlow's NIR and vacuum degassing checkpoints.",
+    content: `## Cross-Contamination: The Hidden Threat to Extrusion Barrels
+
+Polypropylene (PP) and Polyethylene (PE) process at barrel temperatures between 180 C and 250 C. When polyvinyl chloride (PVC) or incompatible engineering polymers enter a polyolefin stream, thermal degradation begins well below polyolefin melt temperatures.
+
+Degrading PVC releases hydrochloric acid (HCl) gas, which corrodes nitrided extruder screws, pits precision mold cavities, and leaves carbonized black specks embedded in molded parts.
+
+## Checkpoint Mutu 1: NIR Spectroscopy & Homogeneous Sorting
+
+PrimeFlow's quality architecture begins before size reduction:
+- Incoming post-industrial bales are inspected against manifest history, polymer family, and conversion process (injection, blow, or film).
+- Handheld Near-Infrared (NIR) spectroscopy screens polymer identity and enforces a strict batch rejection rule if PVC contamination exceeds 0.1%.
+- Feedstock is segregated by base color to preserve natural translucency and whiteness without excessive pigment masking.
+
+## Checkpoint Mutu 2 to 5: Alkaline Wash & Triple Vacuum Degassing
+
+Following metal detection and wet granulation, flakes enter a 70 to 80 C alkaline and surfactant wash alongside sink-float density separation. After centrifugal and thermal drying to below 0.05% moisture, the material is compounded with a measured additive package (0.1 to 0.3% primary and secondary antioxidants, optical brighteners, and odor neutralizers).
+
+Inside the extruder, **triple-stage vacuum degassing** extracts residual volatile organic compounds (VOCs) and trapped moisture vapor before the melt passes through a 100 to 120 mesh (<100 micron) automatic screen changer. The result is a dense, void-free pellet with uniform geometry for reliable hopper feeding.`,
+    category_name: "Quality Assurance",
+    cover_image_url: "/images/materials/pe-white.jpg",
+    author_name: "Karim Abdul Azis",
+    author_role: "Production, Logistics & Technical Trial Lead",
+    reading_time_minutes: 5,
+    published: true,
+    published_at: "2026-11-01T09:00:00.000Z",
+    seo_title:
+      "NIR PVC Screening & Triple-Stage Vacuum Degassing | PrimeFlow Insights",
+    seo_description:
+      "Technical breakdown of NIR polymer sorting, 70-80C alkaline washing, and triple-stage vacuum degassing in post-industrial PP and PE recycling.",
+    created_at: "2026-11-01T09:00:00.000Z",
+    updated_at: "2026-11-04T09:00:00.000Z",
+  },
+];
+
+export const INITIAL_QUOTE_REQUESTS: QuoteRequest[] = [
+  {
+    id: "rfq-demo-1",
+    reference_code: "PF-RFQ-2026-0101",
+    company_name: "[SAMPLE RECORD] PT Kemasan Industri Nusantara",
+    contact_name: "Hendra Wijaya (Sample Inquiry)",
+    email: "procurement.sample@example.co.id",
+    phone: "+62 812 0000 0101",
+    industry_segment: "Injection Molding (Household & Storage)",
+    inquiry_type: "ADAPTIVE_SUPPLY",
+    product_id: "prod-pp-100",
+    product_grade: "PP 100",
+    monthly_volume_kg: 15000,
+    delivery_schedule_preference: "Staggered bi-weekly drops (7.5 tons per drop)",
+    target_application: "Stackable household storage boxes and utility baskets (non-food)",
+    message:
+      "Sample development record for CMS pipeline verification. Evaluating 15 tons/month Adaptive Locked-Supply with target MFI around 2.2 g/10 min.",
+    calculator_snapshot: {
+      consumptionUnit: "tons",
+      monthlyVolumeKg: 15000,
+      virginPricePerKg: 24500,
+      primeflowPricePerKg: 18080,
+      monthlyVirginCost: 367500000,
+      monthlyPrimeflowCost: 271200000,
+      monthlySavings: 96300000,
+      annualSavings: 1155600000,
+      percentageDifference: 26.2,
+      currency: "IDR",
+    },
+    status: "Quoted",
+    priority: "HIGH",
+    assigned_to: "user-sales-1",
+    follow_up_date: "2026-11-12",
+    created_at: "2026-11-02T04:30:00.000Z",
+    updated_at: "2026-11-04T10:15:00.000Z",
+  },
+  {
+    id: "rfq-demo-2",
+    reference_code: "PF-RFQ-2026-0102",
+    company_name: "[SAMPLE RECORD] CV Tirta Polimer Mandiri",
+    contact_name: "Rina Kusuma (Sample Inquiry)",
+    email: "engineering.sample@example.co.id",
+    phone: "+62 813 0000 0202",
+    industry_segment: "Blow Molding (Chemical Containers)",
+    inquiry_type: "TOLL_RECYCLING",
+    product_id: "prod-hdpe-100",
+    product_grade: "HDPE 100",
+    monthly_volume_kg: 8000,
+    delivery_schedule_preference: "Monthly closed-loop return batch",
+    target_application: "5-liter industrial detergent jerrycans",
+    message:
+      "Sample development record: Inquiring about closed-loop toll-recycling for 4 tons/month internal HDPE parison flash plus 4 tons/month PrimeFlow HDPE 100 top-up.",
+    calculator_snapshot: null,
+    status: "Reviewed",
+    priority: "STANDARD",
+    assigned_to: "user-sales-1",
+    follow_up_date: "2026-11-10",
+    created_at: "2026-11-04T07:20:00.000Z",
+    updated_at: "2026-11-04T15:00:00.000Z",
+  },
+];
+
+export const INITIAL_SAMPLE_REQUESTS: SampleRequest[] = [
+  {
+    id: "smp-demo-1",
+    reference_code: "PF-SMP-2026-0041",
+    company_name: "[SAMPLE RECORD] PT Presisi Plastik Jababeka",
+    contact_name: "Ir. Budi Santoso (Sample Request)",
+    email: "qc.sample@example.co.id",
+    phone: "+62 811 0000 0303",
+    plant_city: "Cikarang, Bekasi (Jabodetabek Target Region)",
+    shipping_address: "Kawasan Industri Jababeka II (Sample Development Record)",
+    product_id: "prod-pp-100",
+    product_grade: "PP 100",
+    requested_kg: 10,
+    conversion_process: "Injection Molding (280T clamping force)",
+    machine_model: "Haitian MA2800 / Multi-cavity utility crate mold",
+    requires_onsite_technician: true,
+    preferred_trial_window: "Next Tuesday morning shift",
+    technical_notes:
+      "Sample development record: Requesting 10 kg complimentary trial kit with batch COA and on-site technician accompaniment to verify cycle time and shrinkage.",
+    status: "Trial Scheduled",
+    fulfillment_notes:
+      "Sample kit Lot PF-11223 (10 kg) prepared with printed COA QR sheet.",
+    assigned_to: "user-sales-1",
+    created_at: "2026-11-03T06:10:00.000Z",
+    updated_at: "2026-11-04T11:00:00.000Z",
+  },
+];
+
+export const INITIAL_INQUIRY_NOTES: InquiryNote[] = [
+  {
+    id: "note-1",
+    quote_request_id: "rfq-demo-1",
+    sample_request_id: null,
+    author_id: "user-sales-1",
+    author_name: "Karim Abdul Azis",
+    author_role: "SALES",
+    note: "[Sample Log] Preliminary HPP simulation shared using Rp 18,080/kg indicative benchmark (Rp 452,000 per 25 kg sack). Client requested 10 kg PP 100 sample trial before locking Q1 schedule.",
+    created_at: "2026-11-04T10:15:00.000Z",
+  },
+];
+
+export const INITIAL_INTERNAL_USERS: InternalUser[] = [
+  {
+    id: "user-super-admin",
+    email: "zidannnugroho@apps.ipb.ac.id",
+    full_name: "Muhammad Zidan Nugroho",
+    title: "Chief Executive (Direktur Utama) & Super Admin",
+    role: "SUPER_ADMIN",
+    is_active: true,
+    created_at: "2026-10-01T00:00:00.000Z",
+  },
+  {
+    id: "user-admin-cms",
+    email: "audinamaharani225@gmail.com",
+    full_name: "Audina Maharani",
+    title: "Finance, HR & CMS Operations Manager",
+    role: "ADMIN_CMS",
+    is_active: true,
+    created_at: "2026-10-01T00:00:00.000Z",
+  },
+  {
+    id: "user-sales-1",
+    email: "karimabdulazis154@gmail.com",
+    full_name: "Karim Abdul Azis",
+    title: "Operations, Logistics & B2B Sales Manager",
+    role: "SALES",
+    is_active: true,
+    created_at: "2026-10-01T00:00:00.000Z",
+  },
+];
+
+export const INITIAL_SITE_CONTENT: SiteContentBlock[] = [
+  {
+    id: "content-home-hero",
+    page_key: "home",
+    section_key: "hero",
+    locale: "en",
+    title: "Prime Quality. Consistent Flow.",
+    subtitle:
+      "Precision-focused recycled PP and PE materials for reliable industrial manufacturing.",
+    body: "Curated post-industrial polypropylene and polyethylene pellets purified via 70 to 80 C alkaline washing, triple-stage vacuum degassing, and 100 to 120 mesh melt filtration. Engineered to protect molding tooling while reducing raw material expenditure by up to 30% compared to imported virgin resin (subject to grade and market index).",
+    structured_data: {
+      primaryCta: "Explore Materials",
+      secondaryCta: "Request a Sample",
+      operationalQualification:
+        "Early-stage industrial materials venture (Phase 1 Toll-Processing & Internal QC Validation Model).",
+    },
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "content-about-overview",
+    page_key: "about",
+    section_key: "overview",
+    locale: "en",
+    title: "Redefining Quality, Creating Value in Post-Industrial Polymer Supply.",
+    subtitle:
+      "PrimeFlow was founded to resolve the structural cost-versus-quality dilemma facing Indonesia's medium-sized plastics manufacturers.",
+    body: "PrimeFlow combines analytical chemistry discipline with circular supply chain engineering. Rather than trading unverified mixed plastic scrap, we focus exclusively on clean post-industrial PP and PE streams validated per batch for Melt Flow Index, moisture (<0.05%), and ash content (<0.15%).",
+    structured_data: {
+      vision:
+        "To become a sustainable raw material producer that realizes a resilient, self-reliant, and environmentally responsible industrial ecosystem through high-precision technology.",
+    },
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+];
+
+export const INITIAL_SITE_SETTINGS: SiteSetting[] = [
+  {
+    id: "set-1",
+    setting_key: "company_legal_name",
+    setting_group: "company",
+    label: "Company / Venture Name",
+    value: "PrimeFlow Industrial Materials",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "set-2",
+    setting_key: "company_tagline",
+    setting_group: "company",
+    label: "Primary Brand Tagline",
+    value: "Prime Quality, Consistent Flow.",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "set-3",
+    setting_key: "operational_stage_disclosure",
+    setting_group: "operations",
+    label: "Operational Transparency Notice",
+    value:
+      "Phase 1 Venture Model: Modular toll-processing production paired with internal laboratory QC calibration and Certificate of Analysis (COA) batch validation.",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "set-4",
+    setting_key: "primary_contact_email",
+    setting_group: "contact",
+    label: "Primary Commercial & Technical Email",
+    value: "zidannnugroho@apps.ipb.ac.id",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "set-5",
+    setting_key: "operations_contact_email",
+    setting_group: "contact",
+    label: "Operations & Finance Email",
+    value: "audinamaharani225@gmail.com",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "set-6",
+    setting_key: "logistics_contact_email",
+    setting_group: "contact",
+    label: "Logistics & Sample Trial Email",
+    value: "karimabdulazis154@gmail.com",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "set-7",
+    setting_key: "whatsapp_business_number",
+    setting_group: "contact",
+    label: "Approved WhatsApp Inquiry Number",
+    value: "6285695704397",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "set-8",
+    setting_key: "service_region",
+    setting_group: "contact",
+    label: "Primary Service & Som Target Region",
+    value: "Bogor & Greater Jakarta (Jabodetabek) Industrial Corridors, West Java, Indonesia",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+  {
+    id: "set-9",
+    setting_key: "reference_price_per_25kg_idr",
+    setting_group: "operations",
+    label: "Proposal Reference Benchmark (25 kg Sack, IDR)",
+    value: "452000",
+    is_public: true,
+    updated_at: "2026-11-05T00:00:00.000Z",
+  },
+];
+
+export const INITIAL_AUDIT_LOGS: AuditLogEntry[] = [
+  {
+    id: "audit-1",
+    actor_email: "zidannnugroho@apps.ipb.ac.id",
+    actor_role: "SUPER_ADMIN",
+    action: "SYSTEM_BOOTSTRAP",
+    entity_type: "catalog",
+    entity_id: "initial-seed",
+    metadata: {
+      note: "Initialized PrimeFlow catalog with 4 proposal-grounded PP/PE grades and 7-stage QC specifications.",
+    },
+    created_at: "2026-11-05T08:00:00.000Z",
+  },
+];
